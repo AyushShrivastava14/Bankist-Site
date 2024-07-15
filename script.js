@@ -16,6 +16,7 @@ const tabs = document.querySelectorAll('.operations__tab');
 const tabsContainer = document.querySelector('.operations__tab-container');
 const tabsContent = document.querySelectorAll('.operations__content');
 
+//--------------------------------------------------------------------------------------------------------------------------------------
 
 // Modal window
 const openModal = function (event) {
@@ -40,6 +41,7 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
+//--------------------------------------------------------------------------------------------------------------------------------------
 
 btnScrollTo.addEventListener('click', () => {
   // There are 2 methods for implementing scrolling
@@ -60,6 +62,9 @@ btnScrollTo.addEventListener('click', () => {
   section1.scrollIntoView({behavior: 'smooth'});
 });
 
+//--------------------------------------------------------------------------------------------------------------------------------------
+
+// Page navigation
 
 // Scrolling without event propagation (not useful with large set of elements)
 // document.querySelectorAll('.nav__link').forEach(
@@ -89,6 +94,7 @@ navLinks.addEventListener('click', function(e) {
   }
 });
 
+//--------------------------------------------------------------------------------------------------------------------------------------
 
 // Tabbed components
 tabsContainer.addEventListener('click', (event) => {
@@ -110,6 +116,7 @@ tabsContainer.addEventListener('click', (event) => {
   document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add('operations__content--active');
 });
 
+//--------------------------------------------------------------------------------------------------------------------------------------
 
 // Menu fade animation
 const handleHover = function(event) {
@@ -138,6 +145,7 @@ nav.addEventListener('mouseover', handleHover.bind(0.5));
 
 nav.addEventListener('mouseout', handleHover.bind(1));
 
+//--------------------------------------------------------------------------------------------------------------------------------------
 
 // Sticky navigation (2 Methods)
 
@@ -173,12 +181,15 @@ const headerObserver = new IntersectionObserver(stickyNav, {
 
 headerObserver.observe(header);
 
+//--------------------------------------------------------------------------------------------------------------------------------------
+
+// Reveal sections
 
 const sections = document.querySelectorAll('.section');
 
 const revealSection = function(entries, observer) {
   const [entry] = entries;
-  console.log(entry);
+  // console.log(entry);
 
   if(!entry.isIntersecting) return;
 
@@ -195,3 +206,36 @@ sections.forEach(section => {
   sectionObserver.observe(section);
   section.classList.add('section--hidden');
 });
+
+//--------------------------------------------------------------------------------------------------------------------------------------
+
+// Lazy Loading Images
+
+const imgTargets = document.querySelectorAll('img[data-src]');
+
+const loadImg = function(entries, observer) {
+  const [entry] = entries;
+  // console.log(entry);
+
+  if(!entry.isIntersecting) return;
+
+  // Replace src with data-src
+  entry.target.src = entry.target.dataset.src;
+
+  entry.target.addEventListener('load', () => {
+    entry.target.classList.remove('lazy-img');
+  });
+
+  observer.unobserve(entry.target);
+}
+
+const imgObserver = new IntersectionObserver(loadImg, {
+  root: null,
+  threshold: 0,
+  rootMargin: '200px',
+});
+
+imgTargets.forEach(img => imgObserver.observe(img));
+
+//--------------------------------------------------------------------------------------------------------------------------------------
+
