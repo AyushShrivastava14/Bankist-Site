@@ -1,5 +1,3 @@
-/* The page is NOT responsive. You can implement responsiveness yourself if you wanna have some fun 😃 */
-
 :root {
     --color-primary: #5ec576;
     --color-secondary: #ffcb03;
@@ -574,16 +572,6 @@ h4 {
   display: block;
   margin: 0 auto;
   margin-bottom: 5rem;
-}
-
-.footer__copyright {
-  font-size: 1.4rem;
-  color: #aaa;
-  text-align: center;
-}
-
-.footer__copyright .footer__link {
-  font-size: 1.4rem;
 }
 
 /* MODAL WINDOW */
